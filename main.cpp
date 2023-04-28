@@ -1,4 +1,4 @@
-#include <conteiner.h>
+#include "conteiner.h"
 int main(int argc, char* argv[]){
     string name = "C:\\Visual studio\\codes\\2\\examples_2\\";
     name.append(argv[1]);
@@ -7,8 +7,8 @@ int main(int argc, char* argv[]){
         cout << "There is no such directory in examples_2";
     }
     else{
-        dirent* entry = nullptr;
-        while ((entry = readdir(directory)) != nullptr) {
+        dirent* entry;
+        while ((entry = readdir(directory)) != NULL) {
             cout << entry->d_name << endl;
         }
     }
