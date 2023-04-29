@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
         closedir(directory);
     }
     catch(const char* error){
-        cout << "Error:" << error;
+        cout << "Error: " << error;
     }
     return 0;
 }
