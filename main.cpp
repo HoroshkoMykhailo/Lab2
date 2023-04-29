@@ -1,17 +1,29 @@
 #include "conteiner.h"
 int main(int argc, char* argv[]){
-    string name = "C:\\Visual studio\\codes\\2\\examples_2\\";
-    name.append(argv[1]);
-    DIR *directory = opendir(name.c_str());
-    if(!directory){
-        cout << "There is no such directory in examples_2";
-    }
-    else{
+    try{
+        string name = "C:\\Visual studio\\codes\\2\\examples_2\\";
+        name.append(argv[1]);
+        DIR *directory = opendir(name.c_str());
+        if(!directory){
+            throw "There is no such directory in examples_2";
+        }
+        int iffiles = 0;
         dirent* entry;
         while ((entry = readdir(directory)) != NULL) {
-            cout << entry->d_name << endl;
+            string filename = entry->d_name;
+            int key = filename.rfind(".csv");
+            if(key != string::npos && key == filename.length() - 4){
+                cout << filename << endl;
+                iffiles = 1;
+            }
         }
+        if(!iffiles){
+            throw "There is no files in csv format in this directory";
+        }
+        closedir(directory);
     }
-    closedir(directory);
+    catch(const char* error){
+        cout << "Error:" << error;
+    }
     return 0;
 }
