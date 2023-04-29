@@ -1,8 +1,11 @@
 #include "library.h"
-int main(int argc, char* argv[]){
+int main(){
     try{
         string name = "C:\\Visual studio\\codes\\2\\examples_2\\";
-        name.append(argv[1]);
+        string s;
+        cout << "Enter name of directory: ";
+        cin >> s;
+        name.append(s);
         DIR *directory = opendir(name.c_str());
         if(!directory){
             throw "There is no such directory in examples_2";
@@ -11,7 +14,9 @@ int main(int argc, char* argv[]){
         dirent* entry;
         conteiner cont;
         while ((entry = readdir(directory)) != NULL) {
-            string filename = entry->d_name;
+            string filename = name;
+            filename.append("\\");
+            filename.append(entry->d_name);
             int key = filename.rfind(".csv");
             if(key != string::npos && key == filename.length() - 4){
                 fillcont(filename, cont);

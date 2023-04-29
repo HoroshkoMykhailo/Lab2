@@ -1,5 +1,11 @@
 #include "row.h"
-
+row:: row(){
+    s = "";
+    country = "";
+    votes = nullptr;
+    mark = 0;
+    num_of_votes = 0;
+}
 row:: row(string line, int n){
     stringstream ss(line);
     s = line;
@@ -13,8 +19,7 @@ row:: row(string line, int n){
     }
     country = word;
     while(getline(ss, word, ',')){
-        stringstream strings(word);
-        strings >> votes[i];
+        votes[i] = stoi(word);
         i++;
     }
 }

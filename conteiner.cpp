@@ -10,13 +10,13 @@ row& conteiner:: operator[](int index){
 int conteiner:: getsize(){
     return size;
 }
-void conteiner:: add(string line){
+void conteiner:: add(string line, int n){
     row* d = new row[size + 1];
     for(int i = 0; i< size; i++){
-        d[i] = data[index];
+        d[i] = data[i];
     }
-    d[size] = row(line);
-    delete[] date;
+    d[size] = row(line, n);
+    delete[] data;
     data = d;
     size++;
 }
@@ -33,6 +33,6 @@ bool conteiner:: is_already_here(string line, int& n){
     }
     return false;
 }
-void conteiner:: replace(string l, int p){
-    d[p] = row(l);
+void conteiner:: replace(string l, int p, int n){
+    data[p] = row(l, n);
 }

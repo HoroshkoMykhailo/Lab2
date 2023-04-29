@@ -12,6 +12,7 @@ class row{
         int mark;
         int num_of_votes;
     public:
+        row();
         row(string, int);
         void addmark(int);
         int getvote(int);

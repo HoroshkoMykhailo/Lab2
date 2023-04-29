@@ -7,10 +7,12 @@ void fillcont(string name, conteiner& c){
     int n = stoi(line);
     for(int i = 0; i < n; i++){
         getline(file, line);
-        int j = 0, pos = 0, k;
-        while(k = line.find(',', pos) != string:: npos){
+        int j = 0, pos = 0;
+        size_t k = line.find(',', pos);
+        while(k != string:: npos ){
             j++;
-            pos = k;
+            pos = k + 1;
+            k = line.find(',', pos);
         }
         if(i != 0 && j != c[0].getnum()){
             throw ("In file %s, in line %d is not enough number of votes", name, i++);
@@ -22,10 +24,10 @@ void fillcont(string name, conteiner& c){
             cout << "What line would you like to consider: ";
             cin >> k;
             if(k == 2){
-                c.replace(line, pos);
+                c.replace(line, pos, j);
             }
         }
-        else c.add(line);
+        else c.add(line, j);
     }
 }
 void printcon(conteiner c){

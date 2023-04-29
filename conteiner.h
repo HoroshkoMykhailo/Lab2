@@ -8,9 +8,8 @@ class conteiner{
         ~conteiner();
         row& operator[](int);
         int getsize();
-        void add(string);
+        void add(string, int);
         bool is_already_here(string, int&);
-        void replace(string, int);
-        void resize(int);
+        void replace(string, int, int);
     //  void sort_by(int);
 };
