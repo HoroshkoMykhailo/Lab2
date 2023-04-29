@@ -1,4 +1,4 @@
-#include "conteiner.h"
+#include "library.h"
 int main(int argc, char* argv[]){
     try{
         string name = "C:\\Visual studio\\codes\\2\\examples_2\\";
@@ -9,11 +9,12 @@ int main(int argc, char* argv[]){
         }
         int iffiles = 0;
         dirent* entry;
+        conteiner cont;
         while ((entry = readdir(directory)) != NULL) {
             string filename = entry->d_name;
             int key = filename.rfind(".csv");
             if(key != string::npos && key == filename.length() - 4){
-                cout << filename << endl;
+                fillcont(filename, cont);
                 iffiles = 1;
             }
         }

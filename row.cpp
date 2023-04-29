@@ -2,6 +2,7 @@
 
 row:: row(string line, int n){
     stringstream ss(line);
+    s = line;
     votes = new int [n];
     mark = 0;
     string word;
@@ -24,6 +25,9 @@ int row:: getvote(int n){
 }
 string row:: getcountry(){
     return country;
+}
+string row:: gets(){
+    return s;
 }
 int row:: getnum(){
     return num_of_votes;
