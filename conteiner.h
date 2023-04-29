@@ -7,8 +7,10 @@ class conteiner{
         conteiner();
         ~conteiner();
         row& operator[](int);
+        int getsize();
         void add(string);
         bool is_already_here(string, int&);
-        void replace(int, string);
-        void sort_by(int);
+        void replace(string, int);
+        void resize(int);
+    //  void sort_by(int);
 };

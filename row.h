@@ -2,6 +2,7 @@
 #include <dirent.h>
 #include <sstream>
 #include <fstream>
+#include <string>
 using namespace std;
 class row{
     private:

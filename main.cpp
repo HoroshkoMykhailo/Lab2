@@ -22,6 +22,7 @@ int main(int argc, char* argv[]){
             throw "There is no files in csv format in this directory";
         }
         closedir(directory);
+        printcon(cont);
     }
     catch(const char* error){
         cout << "Error: " << error;

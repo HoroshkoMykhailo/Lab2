@@ -13,7 +13,8 @@ row:: row(string line, int n){
     }
     country = word;
     while(getline(ss, word, ',')){
-        votes[i] = stoi(word);
+        stringstream strings(word);
+        strings >> votes[i];
         i++;
     }
 }
