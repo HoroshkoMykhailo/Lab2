@@ -14,6 +14,10 @@ void fillcont(string name, conteiner& c){
             throw (s.c_str());
         }
         while(k != string:: npos ){
+            if(k == pos){
+                string s = "In file " + name + ", in line " + to_string(++i) + " there is an empty cell number " + to_string(j);
+            throw (s.c_str());
+            }
             j++;
             pos = k +1;
             k = line.find(',',pos);
