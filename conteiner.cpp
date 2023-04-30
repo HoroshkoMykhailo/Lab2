@@ -36,3 +36,6 @@ bool conteiner:: is_already_here(string line, int& n){
 void conteiner:: replace(string l, int p, int n){
     data[p] = row(l, n);
 }
+bool conteiner:: is_empty(){
+    return size == 0;
+}

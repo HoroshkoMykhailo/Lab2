@@ -1,11 +1,9 @@
 #include "library.h"
-int main(){
+int main(int argc, char* argv[]){
     try{
         string name = "C:\\Visual studio\\codes\\2\\examples_2\\";
         string s;
-        cout << "Enter name of directory: ";
-        cin >> s;
-        name.append(s);
+        name.append(argv[1]);
         DIR *directory = opendir(name.c_str());
         if(!directory){
             throw "There is no such directory in examples_2";

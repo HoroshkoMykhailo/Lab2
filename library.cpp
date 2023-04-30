@@ -11,13 +11,14 @@ void fillcont(string name, conteiner& c){
         size_t k = line.find(',', pos);
         while(k != string:: npos ){
             j++;
-            pos = k + 1;
-            k = line.find(',', pos);
+            pos = k +1;
+            k = line.find(',',pos);
         }
-        if(i != 0 && j != c[0].getnum()){
-            throw ("In file %s, in line %d is not enough number of votes", name, i++);
+        if(!c.is_empty() && j != c[0].getnum()){
+            string s = "In file " + name + ", in line " + to_string(++i) + " is not enough number of votes";
+            throw (s.c_str());
         }
-        if(i!= 0 && c.is_already_here(line, pos)){
+        if(!c.is_empty() && c.is_already_here(line, pos)){
             cout << "There is two equal countries in directory " << name << ":\n";
             cout<< "1. " << c[pos].gets() << endl;
             cout<< "2. " << line << endl;
