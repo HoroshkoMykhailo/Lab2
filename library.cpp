@@ -9,6 +9,10 @@ void fillcont(string name, conteiner& c){
         getline(file, line);
         int j = 0, pos = 0;
         size_t k = line.find(',', pos);
+        if(k == 0){
+            string s = "In file " + name + ", in line " + to_string(++i) + " is an empty country";
+            throw (s.c_str());
+        }
         while(k != string:: npos ){
             j++;
             pos = k +1;
