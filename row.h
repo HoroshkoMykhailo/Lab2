@@ -15,6 +15,7 @@ class row{
         row();
         row(string, int);
         void addmark(int);
+        int getmark();
         int getvote(int);
         string gets();
         string getcountry();

@@ -31,9 +31,18 @@ void fillcont(string name, conteiner& c){
         else c.add(line, j);
     }
 }
-void printcon(conteiner c){
-    for(int i = 0; i< c.getsize(); i++){
-        cout<< c[i].gets()<< endl;
+void callculate(conteiner& c){
+    for(int i=0; i < c[0].getnum(); i++){
+        c.sort_by(i);
+        c.addmarks();
     }
-
+}
+void outp(conteiner& c, string outname){
+    c.sort_bymarks();
+    ofstream file(outname);
+    file << "10" << endl;
+    for(int i = 0; i< 10; i++){
+        file << c[i].getcountry() << ',' << c[i].getmark() << endl;
+    }
+    file.close();
 }

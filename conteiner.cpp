@@ -39,3 +39,34 @@ void conteiner:: replace(string l, int p, int n){
 bool conteiner:: is_empty(){
     return size == 0;
 }
+void conteiner:: sort_by(int n){
+    for(int i = 0; i<size; i++){
+        for(int j = i + 1; j < size; j++){
+            if(data[i].getvote(n) < data[j].getvote(n)){
+                row temp = data[i];
+                data[i] = data[j];
+                data[j] = temp;
+            }
+        }
+    }
+}
+void conteiner:: addmarks(){
+    data[0].addmark(12);
+    data[1].addmark(10);
+    int j = 8;
+    for(int i = 2; i<10; i++){
+        data[i].addmark(j);
+        j--;
+    }
+}
+void conteiner:: sort_bymarks(){
+        for(int i = 0; i<size; i++){
+        for(int j = i + 1; j < size; j++){
+            if(data[i].getmark() < data[j].getmark()){
+                row temp = data[i];
+                data[i] = data[j];
+                data[j] = temp;
+            }
+        }
+    }
+}

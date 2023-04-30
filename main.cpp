@@ -2,7 +2,7 @@
 int main(int argc, char* argv[]){
     try{
         string name = "C:\\Visual studio\\codes\\2\\examples_2\\";
-        string s;
+        string s, out = "C:\\Visual studio\\codes\\2\\examples_2\\results.csv";
         name.append(argv[1]);
         DIR *directory = opendir(name.c_str());
         if(!directory){
@@ -25,7 +25,8 @@ int main(int argc, char* argv[]){
             throw "There is no files in csv format in this directory";
         }
         closedir(directory);
-        printcon(cont);
+        callculate(cont);
+        outp(cont, out);
     }
     catch(const char* error){
         cout << "Error: " << error;

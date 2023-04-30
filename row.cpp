@@ -26,6 +26,9 @@ row:: row(string line, int n){
 void row:: addmark(int n){
     mark += n;
 }
+int row:: getmark(){
+    return mark;
+}
 int row:: getvote(int n){
     return(votes[n]);
 }
