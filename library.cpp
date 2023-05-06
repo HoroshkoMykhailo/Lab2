@@ -1,6 +1,27 @@
 #include "library.h"
-
-void fillcont(string name, conteiner& c){
+void reader:: get_cont_from_directory(string name, conteiner &cont){
+        DIR *directory = opendir(name.c_str());
+        if(!directory){
+            throw "There is no such directory in examples_2";
+        }
+        int iffiles = 0;
+        dirent* entry;
+        while ((entry = readdir(directory)) != NULL) {
+            string filename = name;
+            filename.append("\\");
+            filename.append(entry->d_name);
+            int key = filename.rfind(".csv");
+            if(key != string::npos && key == filename.length() - 4){
+                fillcont(filename, cont);
+                iffiles = 1;
+            }
+        }
+        if(!iffiles){
+            throw "There is no files in csv format in this directory";
+        }
+        closedir(directory);
+}
+void reader:: fillcont(string name, conteiner& c){
     ifstream file(name);
     string line;
     getline(file,line);
@@ -39,15 +60,16 @@ void fillcont(string name, conteiner& c){
         else c.add(line, j);
     }
 }
-void callculate(conteiner& c){
+void solver:: callculate(conteiner& c){
     for(int i=0; i < c[0].getnum(); i++){
         c.sort_by(i);
         c.addmarks();
     }
 }
-void outp(conteiner& c, string outname){
+void solver:: outp(conteiner& c, string outname){
     c.sort_bymarks();
     ofstream file(outname);
+    int n = 10 > c.getsize() ? c.getsize() : 10;
     file << "10" << endl;
     for(int i = 0; i< 10; i++){
         file << c[i].getcountry() << ',' << c[i].getmark() << endl;
