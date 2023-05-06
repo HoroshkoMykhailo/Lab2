@@ -66,6 +66,7 @@ void reader:: fillcont(string name, conteiner& c){
         }
         else c.add(line, j, i, name);
     }
+    file.close();
 }
 void solver:: callculate(conteiner& c){
     for(int i=0; i < c[0].getnum(); i++){
