@@ -2,7 +2,7 @@
 int main(int argc, char* argv[]){
     try{
         string name = "C:\\Visual studio\\codes\\2\\examples_2\\";
-        string s, out = "C:\\Visual studio\\codes\\2\\examples_2\\results.csv";
+        string out = "C:\\Visual studio\\codes\\2\\examples_2\\results.csv";
         name.append(argv[1]);
         reader r;
         solver solve;
