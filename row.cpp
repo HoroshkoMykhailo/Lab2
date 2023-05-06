@@ -14,9 +14,7 @@ row:: row(string line, int n, int numline, string filename){
     string word;
     num_of_votes = n;
     int i = 0;
-    if(!getline(ss, word, ',')){
-        throw "File is emty";
-    }
+    getline(ss, word, ',');
     country = word;
     try{
     while(getline(ss, word, ',')){

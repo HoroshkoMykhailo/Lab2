@@ -24,7 +24,10 @@ void reader:: get_cont_from_directory(string name, conteiner &cont){
 void reader:: fillcont(string name, conteiner& c){
     ifstream file(name);
     string line;
-    getline(file,line);
+    if(!getline(file,line)){
+        string s = "File " + name + " is empty";
+        throw(s.c_str());
+    };
     int n = stoi(line);
     for(int i = 0; i < n; i++){
         getline(file, line);
