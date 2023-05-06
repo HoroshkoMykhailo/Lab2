@@ -14,6 +14,7 @@ class row{
         int num_of_votes;
     public:
         row();
+        ~row();
         row(string, int, int, string);
         void addmark(int);
         int getmark();

@@ -28,6 +28,9 @@ row:: row(string line, int n, int numline, string filename){
         throw(s.c_str());
     }
 }
+row:: ~row(){
+    delete[] votes;
+}
 void row:: addmark(int n){
     mark += n;
 }
