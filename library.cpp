@@ -48,16 +48,16 @@ void reader:: fillcont(string name, conteiner& c){
             throw (s.c_str());
         }
         if(!c.is_empty() && c.is_already_here(line, pos)){
-            cout << "There is two equal countries in directory " << name << ":\n";
+            cout << "There is two equal countries in this directory:\n";
             cout<< "1. " << c[pos].gets() << endl;
             cout<< "2. " << line << endl;
             cout << "What line would you like to consider: ";
             cin >> k;
             if(k == 2){
-                c.replace(line, pos, j);
+                c.replace(line, pos, j, i, name);
             }
         }
-        else c.add(line, j);
+        else c.add(line, j, i, name);
     }
 }
 void solver:: callculate(conteiner& c){
@@ -70,7 +70,7 @@ void solver:: outp(conteiner& c, string outname){
     c.sort_bymarks();
     ofstream file(outname);
     int n = 10 > c.getsize() ? c.getsize() : 10;
-    file << "10" << endl;
+    file << n << endl;
     for(int i = 0; i< 10; i++){
         file << c[i].getcountry() << ',' << c[i].getmark() << endl;
     }

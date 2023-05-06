@@ -3,6 +3,7 @@
 #include <sstream>
 #include <fstream>
 #include <string>
+#include <stdexcept>
 using namespace std;
 class row{
     private:
@@ -13,7 +14,7 @@ class row{
         int num_of_votes;
     public:
         row();
-        row(string, int);
+        row(string, int, int, string);
         void addmark(int);
         int getmark();
         int getvote(int);

@@ -6,7 +6,7 @@ row:: row(){
     mark = 0;
     num_of_votes = 0;
 }
-row:: row(string line, int n){
+row:: row(string line, int n, int numline, string filename){
     stringstream ss(line);
     s = line;
     votes = new int [n];
@@ -18,9 +18,14 @@ row:: row(string line, int n){
         throw "File is emty";
     }
     country = word;
+    try{
     while(getline(ss, word, ',')){
         votes[i] = stoi(word);
         i++;
+    }
+    }catch(const invalid_argument){
+        string s = "In file " + filename + ", in line " + to_string(++numline) + " there is a string in cell number " + to_string(++i);
+        throw(s.c_str());
     }
 }
 void row:: addmark(int n){
