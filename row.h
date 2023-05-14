@@ -1,10 +1,4 @@
-#include <iostream>
-#include <dirent.h>
-#include <sstream>
-#include <fstream>
-#include <string>
-#include <stdexcept>
-using namespace std;
+#include "except_classes.h"
 class row{
     private:
         string s;
@@ -14,8 +8,7 @@ class row{
         int num_of_votes;
     public:
         row();
-        ~row();
-        row(string, int, int, string);
+        row(string, int);
         void addmark(int);
         int getmark();
         int getvote(int);

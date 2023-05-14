@@ -1,86 +1,115 @@
 #include "library.h"
-void reader:: get_cont_from_directory(string name, conteiner &cont){
+void reader:: get_cont_from_directory(string name, container &cont){
         DIR *directory = opendir(name.c_str());
         if(!directory){
-            throw "There is no such directory in examples_2";
+            // throw std::exception()
+            throw directory_error("There is no such directory in examples_2");
         }
         int iffiles = 0;
         dirent* entry;
+        lines_error errors;
         while ((entry = readdir(directory)) != NULL) {
             string filename = name;
             filename.append("\\");
             filename.append(entry->d_name);
             int key = filename.rfind(".csv");
             if(key != string::npos && key == filename.length() - 4){
-                fillcont(filename, cont);
+                fillcont(filename, cont, errors);
                 iffiles = 1;
             }
         }
+        if(!errors.is_empty()){
+            throw errors;
+        }
         if(!iffiles){
-            throw "There is no files in csv format in this directory";
+            throw directory_error("There is no files in csv format in this directory");
         }
         closedir(directory);
 }
-void reader:: fillcont(string name, conteiner& c){
+void reader:: fillcont(string name, container& c, lines_error& er){
     ifstream file(name);
     string line;
+    checker check;
     if(!getline(file,line)){
         string s = "File " + name + " is empty";
-        throw(s.c_str());
+        throw directory_error(s);
     };
     int n = stoi(line);
     for(int i = 0; i < n; i++){
         getline(file, line);
-        int j = 0, pos = 0;
-        size_t k = line.find(',', pos);
-        if(k == string::npos){
-            string s = "In file " + name + ", there is no coma at line " + to_string(++i);
-            throw(s.c_str());
-        }
-        if(k == 0){
-            string s = "In file " + name + ", in line " + to_string(++i) + " is an empty country";
-            throw (s.c_str());
-        }
-        while(k != string:: npos ){
-            if(k == pos){
-                string s = "In file " + name + ", in line " + to_string(++i) + " there is an empty cell number " + to_string(j);
-            throw (s.c_str());
-            }
-            j++;
-            pos = k +1;
-            k = line.find(',',pos);
-        }
-        if(!c.is_empty() && j != c[0].getnum()){
-            string s = "In file " + name + ", in line " + to_string(++i) + " is not enough number of votes";
-            throw (s.c_str());
-        }
-        if(!c.is_empty() && c.is_already_here(line, pos)){
-            cout << "There is two equal countries in this directory:\n";
-            cout<< "1. " << c[pos].gets() << endl;
-            cout<< "2. " << line << endl;
-            cout << "What line would you like to consider: ";
-            cin >> k;
-            if(k == 2){
-                c.replace(line, pos, j, i, name);
-            }
-        }
-        else c.add(line, j, i, name);
+        int j = 0;
+        if(check.checkline(er, line, name, j, c)) c.add(line, j);
     }
     file.close();
 }
-void solver:: callculate(conteiner& c){
+void solver:: callculate(container& c){
     for(int i=0; i < c[0].getnum(); i++){
         c.sort_by(i);
         c.addmarks();
     }
 }
-void solver:: outp(conteiner& c, string outname){
+
+void solver:: outp(container& c, string outname){
     c.sort_bymarks();
     ofstream file(outname);
     int n = 10 > c.getsize() ? c.getsize() : 10;
-    file << n << endl;
+    file << n;
     for(int i = 0; i< 10; i++){
-        file << c[i].getcountry() << ',' << c[i].getmark() << endl;
+        file << endl << c[i].getcountry() << ',' << c[i].getmark();
     }
     file.close();
+}
+
+bool checker:: checkline(lines_error& er, string line, string name, int& j, container& c){
+    bool r = true;
+    int pos = 0, cell = 1;
+    size_t k = line.find(',', pos);
+    i++;
+    if(k == string::npos){
+        string s = "In file " + name + ", there is no coma at line " + to_string(i);
+        er.addMessage(s);
+        r = false;
+    }
+    if(k == 0){
+        string s = "In file " + name + ", in line " + to_string(i) + " is an empty country";
+        er.addMessage(s);
+        r = false;
+    }
+    try{
+        while(k != string:: npos ){
+            j++;
+            pos = k + 1;
+            k = line.find(',',pos);
+            if(k == pos){
+                string s = "In file " + name + ", in line " + to_string(i) + " there is an empty cell number " + to_string(j);
+                er.addMessage(s);
+                r = false;
+                cell = 0;
+            }
+            else{
+                string l = line.substr(pos, k - pos);
+                for(int k = 0; k < l.length(); k++){
+                    if(!isdigit(l[k])){
+                        throw invalid_argument(" there is a string in cell");
+                    }
+                }
+            }
+        }
+    }catch(const invalid_argument e){
+        string s = "In file " + name + ", in line " + to_string(i) + e.what() + " number " + to_string(j);
+        er.addMessage(s);
+        r = false;
+        cell = 0;
+    }
+    if(!c.is_empty() && j != c[0].getnum() && cell){
+        string s = "In file " + name + ", in line " + to_string(i) + " is not enough number of votes";
+        er.addMessage(s);
+        r = false;
+    }
+    if(!c.is_empty() && c.is_already_here(line, pos)){
+        string s = "There is two equal countries in this directory:\n 1. " + c[pos].gets() + "\n 2. " + line + '\n';
+        er.addMessage(s);
+        r = false;
+    }
+    return r;
 }

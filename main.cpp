@@ -6,13 +6,18 @@ int main(int argc, char* argv[]){
         name.append(argv[1]);
         reader r;
         solver solve;
-        conteiner contein;
-        r.get_cont_from_directory(name, contein);
-        solve.callculate(contein);
-        solve.outp(contein, out);
+        container contain;
+        r.get_cont_from_directory(name, contain);
+        solve.callculate(contain);
+        solve.outp(contain, out);
     }
-    catch(const char* error){
-        cout << "Error: " << error;
+    catch(const directory_error& error){
+        cerr << "Error: " << error.what();
+    }
+    catch(lines_error& errors){
+        for(int i = 0; i < errors.message().size(); i++){
+            cerr << errors.what() << errors.message()[i] << endl;
+        }
     }
     return 0;
 }
