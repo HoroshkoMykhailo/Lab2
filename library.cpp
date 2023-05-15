@@ -75,7 +75,6 @@ bool checker:: checkline(lines_error& er, string line, string name, int& j, cont
         er.addMessage(s);
         r = false;
     }
-    try{
         while(k != string:: npos ){
             j++;
             pos = k + 1;
@@ -90,17 +89,14 @@ bool checker:: checkline(lines_error& er, string line, string name, int& j, cont
                 string l = line.substr(pos, k - pos);
                 for(int k = 0; k < l.length(); k++){
                     if(!isdigit(l[k])){
-                        throw invalid_argument(" there is a string in cell");
+                        string s = "In file " + name + ", in line " + to_string(i) + " there is a string in cell number " + to_string(j);
+                        er.addMessage(s);
+                        r = false;
+                        cell = 0;
                     }
                 }
             }
         }
-    }catch(const invalid_argument e){
-        string s = "In file " + name + ", in line " + to_string(i) + e.what() + " number " + to_string(j);
-        er.addMessage(s);
-        r = false;
-        cell = 0;
-    }
     if(!c.is_empty() && j != c[0].getnum() && cell){
         string s = "In file " + name + ", in line " + to_string(i) + " is not enough number of votes";
         er.addMessage(s);
