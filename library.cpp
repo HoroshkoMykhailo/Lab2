@@ -36,7 +36,10 @@ void reader:: fillcont(string name, container& c, lines_error& er){
     };
     int n = stoi(line);
     for(int i = 0; i < n; i++){
-        getline(file, line);
+        if(!getline(file, line)){
+            string s = "There is less than " + to_string(n) + " lines in file " + name;
+            throw directory_error(s);
+        }
         int j = 0;
         if(check.checkline(er, line, name, j, c)) c.add(line, j);
     }
