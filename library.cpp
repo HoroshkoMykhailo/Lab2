@@ -73,42 +73,44 @@ bool checker:: checkline(lines_error& er, string line, string name, int& j, cont
         er.addMessage(s);
         r = false;
     }
-    if(k == 0){
-        string s = "In file " + name + ", in line " + to_string(i) + " is an empty country";
-        er.addMessage(s);
-        r = false;
-    }
-        while(k != string:: npos ){
-            j++;
-            pos = k + 1;
-            k = line.find(',',pos);
-            if(k == pos){
-                string s = "In file " + name + ", in line " + to_string(i) + " there is an empty cell number " + to_string(j);
-                er.addMessage(s);
-                r = false;
-                cell = 0;
-            }
-            else{
-                string l = line.substr(pos, k - pos);
-                for(int k = 0; k < l.length(); k++){
-                    if(!isdigit(l[k])){
-                        string s = "In file " + name + ", in line " + to_string(i) + " there is a string in cell number " + to_string(j);
-                        er.addMessage(s);
-                        r = false;
+    else{
+        if(k == 0){
+            string s = "In file " + name + ", in line " + to_string(i) + " is an empty country";
+            er.addMessage(s);
+            r = false;
+        }
+            while(k != string:: npos ){
+                j++;
+                pos = k + 1;
+                k = line.find(',',pos);
+                if(k == pos){
+                    string s = "In file " + name + ", in line " + to_string(i) + " there is an empty cell number " + to_string(j);
+                    er.addMessage(s);
+                    r = false;
                         cell = 0;
+                }
+                else{
+                    string l = line.substr(pos, k - pos);
+                    for(int k = 0; k < l.length(); k++){
+                        if(!isdigit(l[k])){
+                            string s = "In file " + name + ", in line " + to_string(i) + " there is a string in cell number " + to_string(j);
+                            er.addMessage(s);
+                            r = false;
+                            cell = 0;
+                        }
                     }
                 }
             }
+        if(!c.is_empty() && j != c[0].getnum() && cell){
+            string s = "In file " + name + ", in line " + to_string(i) + " is not enough number of votes";
+            er.addMessage(s);
+            r = false;
         }
-    if(!c.is_empty() && j != c[0].getnum() && cell){
-        string s = "In file " + name + ", in line " + to_string(i) + " is not enough number of votes";
-        er.addMessage(s);
-        r = false;
-    }
-    if(!c.is_empty() && c.is_already_here(line, pos)){
-        string s = "There is two equal countries in this directory:\n 1. " + c[pos].gets() + "\n 2. " + line + '\n';
-        er.addMessage(s);
-        r = false;
+        if(!c.is_empty() && c.is_already_here(line, pos)){
+            string s = "There is two equal countries in this directory:\n 1. " + c[pos].gets() + "\n 2. " + line + '\n';
+            er.addMessage(s);
+            r = false;
+        }
     }
     return r;
 }
