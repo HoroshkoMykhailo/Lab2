@@ -87,7 +87,7 @@ bool checker:: checkline(lines_error& er, string line, string name, int& j, cont
                     string s = "In file " + name + ", in line " + to_string(i) + " there is an empty cell number " + to_string(j);
                     er.addMessage(s);
                     r = false;
-                        cell = 0;
+                    cell = 0;
                 }
                 else{
                     string l = line.substr(pos, k - pos);
